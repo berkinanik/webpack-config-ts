@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .title {
-  color: red;
+  color: blue;
 }

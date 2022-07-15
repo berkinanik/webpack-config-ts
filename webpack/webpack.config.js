@@ -8,24 +8,14 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const isDevelopment = process.env.NODE_ENV !== "production";
 const mode = process.env.NODE_ENV || "development";
 
-const plugins = [
-  new CleanWebpackPlugin(),
-  new HtmlWebpackPlugin({
-    template: path.resolve(__dirname, "..", "./src/index.html"),
-  }),
-];
-
-if (!isDevelopment) {
-  plugins.push(new MiniCssExtractPlugin({
-    filename: "[name].[hash].css",
-    chunkFilename: "[id].[hash].css",
-  }));
-}
-
 module.exports = {
+  devServer: {
+    hot: true,
+    open: true,
+  },
   entry: path.resolve(__dirname, "..", "./src/index.tsx"),
   resolve: {
-    extensions: [".tsx", ".ts", ".js", ".css", ".scss"],
+    extensions: [".tsx", ".ts", ".js", ".jsx", ".css", ".scss"],
   },
   mode: mode,
   module: {
@@ -33,17 +23,20 @@ module.exports = {
       {
         test: /\.(s[ac]ss$)/i,
         use: [
-          isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+          MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: {
               importLoaders: 1,
               modules: {
-                localIdentName: isDevelopment ? "[path][name]__[local]--[hash:base64:5]" : "[hash:base64]",
+                localIdentName: isDevelopment
+                  ? "[path][name]__[local]--[hash:base64:5]"
+                  : "[hash:base64]",
               }
             },
           },
-          'sass-loader',
+          "postcss-loader",
+          "sass-loader"
         ],
       },
       {
@@ -64,5 +57,15 @@ module.exports = {
     path: path.resolve(__dirname, "..", "./build"),
     filename: "bundle.js",
   },
-  plugins: plugins,
+  plugins: [
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: isDevelopment ? "[name].css" : "[name].[hash].css",
+      chunkFilename: isDevelopment ? "[id].css" : "[id].[hash].css",
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "..", "./src/index.html"),
+    }),
+  ],
+  target: isDevelopment ? "web" : "browserslist",
 };
