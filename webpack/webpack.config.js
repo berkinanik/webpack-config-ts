@@ -20,6 +20,8 @@ module.exports = {
   mode: mode,
   module: {
     rules: [
+      { test: /\.(?:ico|gif|png|jpe?g)$/i, type: "asset/resource" },
+      { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: "asset/inline" },
       {
         test: /\.(s[ac]ss$)/i,
         use: [
@@ -32,11 +34,11 @@ module.exports = {
                 localIdentName: isDevelopment
                   ? "[path][name]__[local]--[hash:base64:5]"
                   : "[hash:base64]",
-              }
+              },
             },
           },
           "postcss-loader",
-          "sass-loader"
+          "sass-loader",
         ],
       },
       {
