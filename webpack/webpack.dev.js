@@ -7,11 +7,9 @@ module.exports = merge(common, {
   devServer: {
     hot: true,
     open: true,
-    port: 3000
+    port: 3000,
   },
   devtool: 'cheap-module-source-map',
-  plugins: [
-    new ReactRefreshWebpackPlugin()
-  ],
-  target: 'web'
+  plugins: [new ReactRefreshWebpackPlugin()],
+  target: 'web',
 });

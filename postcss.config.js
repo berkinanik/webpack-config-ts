@@ -1,5 +1,5 @@
-const isDevelopment = process.env.NODE_ENV !== "production";
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  plugins: [].concat(!isDevelopment && ['postcss-preset-env']).filter(Boolean)
+  plugins: [].concat(!isDevelopment && ['postcss-preset-env']).filter(Boolean),
 };
