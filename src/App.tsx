@@ -1,6 +1,7 @@
 import IMAGE from './nice-view.jpg';
 import SVG from './React-icon.svg';
 import { Input } from 'components/Input';
+import { UserList } from 'components/UserList';
 
 import 'styles/globals.scss';
 
@@ -14,6 +15,8 @@ export const App: React.FC = () => {
       <h1 className={styles.title}>React Typescript</h1>
       <br />
       <Input />
+      <br />
+      <UserList />
     </div>
   );
 };
