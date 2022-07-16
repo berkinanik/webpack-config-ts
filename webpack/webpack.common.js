@@ -7,6 +7,11 @@ const isDev = process.env.NODE_ENV !== 'production';
 module.exports = {
   entry: path.resolve(__dirname, '..', './src/index.tsx'),
   resolve: {
+    alias: {
+      components: path.resolve(__dirname, '../src/components'),
+      utils: path.resolve(__dirname, '../src/utils'),
+      styles: path.resolve(__dirname, '../src/styles'),
+    },
     extensions: ['.tsx', '.ts', '.js', '.jsx', '.css', '.scss'],
   },
   module: {
