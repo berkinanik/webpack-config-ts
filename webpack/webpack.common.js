@@ -39,7 +39,6 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              additionalData: `$assetsPath: "assets";`,
               sourceMap: true,
             },
           },
@@ -60,7 +59,7 @@ module.exports = {
     ],
   },
   output: {
-    path: path.resolve(__dirname, '../build'),
+    path: path.resolve(__dirname, '../build/static'),
     filename: '[name].[contenthash].js',
     clean: true,
   },
@@ -68,8 +67,8 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, '../public/assets'),
-          to: path.resolve(__dirname, `../build/assets`),
+          from: path.resolve(__dirname, '../public'),
+          to: path.resolve(__dirname, `../build/static`),
         },
       ],
       options: {
@@ -81,7 +80,8 @@ module.exports = {
       chunkFilename: isDev ? '[id].css' : '[id].[contenthash].css',
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '..', './public/index.html'),
+      template: path.resolve(__dirname, '..', './src/index.html'),
+      favicon: path.resolve(__dirname, '../public/favicon.ico'),
     }),
   ],
 };
