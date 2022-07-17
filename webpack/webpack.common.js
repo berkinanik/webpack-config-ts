@@ -34,8 +34,16 @@ module.exports = {
               url: false,
             },
           },
-          'postcss-loader',
           'resolve-url-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              postcssOptions: {
+                plugins: [!isDev && 'postcss-preset-env'].filter(Boolean),
+              },
+            },
+          },
           {
             loader: 'sass-loader',
             options: {
