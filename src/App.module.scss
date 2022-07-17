@@ -9,3 +9,12 @@
 .title {
   color: blue;
 }
+
+.image {
+  background-image: url(#{$assetsPath}/images/React-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 300px;
+  width: 300px;
+}

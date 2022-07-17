@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -30,10 +31,18 @@ module.exports = {
               modules: {
                 localIdentName: isDev ? '[path][name]__[local]' : '[hash:base64]',
               },
+              url: false,
             },
           },
           'postcss-loader',
-          'sass-loader',
+          'resolve-url-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              additionalData: `$assetsPath: "assets";`,
+              sourceMap: true,
+            },
+          },
         ],
       },
       {
@@ -51,17 +60,28 @@ module.exports = {
     ],
   },
   output: {
-    path: path.resolve(__dirname, '..', './build'),
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, '../build'),
+    filename: '[name].[contenthash].js',
     clean: true,
   },
   plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, '../public/assets'),
+          to: path.resolve(__dirname, `../build/assets`),
+        },
+      ],
+      options: {
+        concurrency: 100,
+      },
+    }),
     new MiniCssExtractPlugin({
-      filename: isDev ? '[name].css' : '[name].[fullhash].css',
-      chunkFilename: isDev ? '[id].css' : '[id].[fullhash].css',
+      filename: isDev ? '[name].css' : '[name].[contenthash].css',
+      chunkFilename: isDev ? '[id].css' : '[id].[contenthash].css',
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '..', './src/index.html'),
+      template: path.resolve(__dirname, '..', './public/index.html'),
     }),
   ],
 };
