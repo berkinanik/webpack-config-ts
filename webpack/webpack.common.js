@@ -77,6 +77,7 @@ module.exports = {
         {
           from: path.resolve(__dirname, '../public'),
           to: path.resolve(__dirname, `../build/static`),
+          noErrorOnMissing: true,
         },
       ],
       options: {
